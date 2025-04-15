@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API de Receitas</title>
+</head>
+<body>
+
+    <h1>API de Receitas</h1>
+
+    <p>Esta API permite criar, atualizar, listar, obter e deletar <strong>ingredientes</strong> e <strong>receitas</strong>. Além disso, a API permite associar <strong>ingredientes a receitas</strong> e realiza a validação para garantir que ingredientes existentes sejam usados corretamente.</p>
+
+    <h2>📦 Tecnologias Utilizadas</h2>
+    <ul>
+        <li><strong>Flask</strong>: Framework web para criar a API.</li>
+        <li><strong>SQLAlchemy</strong>: ORM (Object-Relational Mapping) para interação com o banco de dados.</li>
+        <li><strong>SQLite</strong>: Banco de dados local (sem necessidade de configuração de servidor).</li>
+        <li><strong>Postman / cURL</strong>: Para testar os endpoints.</li>
+    </ul>
+
+    <h2>🚀 Acessando a API</h2>
+    <p>A API está hospedada em uma máquina na nuvem e pode ser acessada pelo seguinte <strong>IP</strong>:</p>
+    <p><strong>Endereço da API</strong>: <a href="http://10.116.0.3:5000" target="_blank">http://10.116.0.3:5000</a></p>
+
+    <h2>📋 Estrutura do Projeto</h2>
+    <ul>
+        <li><strong>`app.py`</strong>: Inicializa a aplicação Flask, configura o banco de dados e as rotas.</li>
+        <li><strong>`config.py`</strong>: Contém as configurações do banco de dados.</li>
+        <li><strong>`models.py`</strong>: Define os modelos de dados (ingredientes e receitas).</li>
+        <li><strong>`api.py`</strong>: Define as rotas da API, como criação, leitura, atualização e exclusão de receitas e ingredientes.</li>
+    </ul>
+
+    <h2>🚀 Instruções de Instalação</h2>
+    
+    <h3>Passo 1: Clonar o Repositório</h3>
+    <pre><code>git clone https://github.com/TagFernandes/API-receita.git
+cd API-receita</code></pre>
+
+    <h3>Passo 2: Criar um Ambiente Virtual</h3>
+    <pre><code>python -m venv venv</code></pre>
+    <p>Ative o ambiente virtual:</p>
+    <ul>
+        <li>No <strong>Windows</strong>:
+            <pre><code>venv\Scripts\activate</code></pre>
+        </li>
+        <li>No <strong>Linux/macOS</strong>:
+            <pre><code>source venv/bin/activate</code></pre>
+        </li>
+    </ul>
+
+    <h3>Passo 3: Instalar Dependências</h3>
+    <pre><code>pip install -r requirements.txt</code></pre>
+
+    <h3>Passo 4: Rodar o Servidor</h3>
+    <pre><code>python app.py</code></pre>
+
+    <p>A API estará disponível em: <strong><a href="http://10.116.0.3:5000" target="_blank">http://10.116.0.3:5000</a></strong></p>
+
+    <h2>🌍 Endpoints da API</h2>
+
+    <h3>1. Criar Ingrediente</h3>
+    <p><strong>Método</strong>: <code>POST</code></p>
+    <p><strong>Endpoint</strong>: <code>/ingredientes</code></p>
+    <p><strong>Body</strong> (exemplo de dados):</p>
+    <pre><code>
+{
+  "nome": "Farinha de Trigo",
+  "unidade": "gramas"
+}
+    </code></pre>
+
+    <p><strong>Resposta</strong>:</p>
+    <pre><code>
+{
+  "id": 1
+}
+    </code></pre>
+
+    <h3>2. Listar Ingredientes</h3>
+    <p><strong>Método</strong>: <code>GET</code></p>
+    <p><strong>Endpoint</strong>: <code>/ingredientes</code></p>
+    <p><strong>Query String (opcional)</strong>: <code>?nome=&lt;nome_do_ingrediente&gt;</code></p>
+    <p><strong>Exemplo</strong>: <code>/ingredientes?nome=farinha</code></p>
+
+    <p><strong>Resposta</strong> (quando busca por nome):</p>
+    <pre><code>
+[
+  {
+    "id": 1,
+    "nome": "Farinha de Trigo",
+    "unidade": "gramas"
+  }
+]
+    </code></pre>
+
+    <h3>3. Obter Ingrediente Específico</h3>
+    <p><strong>Método</strong>: <code>GET</code></p>
+    <p><strong>Endpoint</strong>: <code>/ingredientes/&lt;id&gt;</code></p>
+    <p><strong>Exemplo</strong>: <code>/ingredientes/1</code></p>
+
+    <p><strong>Resposta</strong>:</p>
+    <pre><code>
+{
+  "id": 1,
+  "nome": "Farinha de Trigo",
+  "unidade": "gramas"
+}
+    </code></pre>
+
+    <h3>4. Atualizar Ingrediente</h3>
+    <p><strong>Método</strong>: <code>PUT</code></p>
+    <p><strong>Endpoint</strong>: <code>/ingredientes/&lt;id&gt;</code></p>
+    <p><strong>Body</strong> (exemplo de dados):</p>
+    <pre><code>
+{
+  "nome": "Açúcar",
+  "unidade": "gramas"
+}
+    </code></pre>
+
+    <p><strong>Resposta</strong>:</p>
+    <pre><code>
+{
+  "mensagem": "Ingrediente atualizado"
+}
+    </code></pre>
+
+    <h3>5. Deletar Ingrediente</h3>
+    <p><strong>Método</strong>: <code>DELETE</code></p>
+    <p><strong>Endpoint</strong>: <code>/ingredientes/&lt;id&gt;</code></p>
+    <p><strong>Exemplo</strong>: <code>/ingredientes/1</code></p>
+
+    <p><strong>Resposta (quando ingrediente é deletado com sucesso)</strong>:</p>
+    <pre><code>
+{
+  "mensagem": "Ingrediente deletado com sucesso."
+}
+    </code></pre>
+
+    <p><strong>Resposta (quando o ingrediente não pode ser deletado devido a associações)</strong>:</p>
+    <pre><code>
+{
+  "erro": "Ingredientes não cadastrados",
+  "ingredientes_nao_encontrados": [2, 4]
+}
+    </code></pre>
+
+    <h3>6. Criar Receita</h3>
+    <p><strong>Método</strong>: <code>POST</code></p>
+    <p><strong>Endpoint</strong>: <code>/receitas</code></p>
+    <p><strong>Body</strong> (exemplo de dados):</p>
+    <pre><code>
+{
+  "nome": "Bolo de Chocolate",
+  "modo_preparo": "Misture todos os ingredientes, coloque em uma forma untada e leve ao forno por 40 minutos.",
+  "ingredientes": [
+    { "id": 1, "quantidade": 200 },   // exemplo: 200 gramas de farinha
+    { "id": 2, "quantidade": 100 },   // exemplo: 100 gramas de açúcar
+    { "id": 3, "quantidade": 2 }      // exemplo: 2 ovos
+  ]
+}
+    </code></pre>
+
+    <p><strong>Resposta</strong>:</p>
+    <pre><code>
+{
+  "id": 1
+}
+    </code></pre>
+
+    <h3>7. Listar Receitas</h3>
+    <p><strong>Método</strong>: <code>GET</code></p>
+    <p><strong>Endpoint</strong>: <code>/receitas</code></p>
+    <p><strong>Query String (opcional)</strong>: <code>?nome=&lt;nome_da_receita&gt;</code></p>
+    <p><strong>Exemplo</strong>: <code>/receitas?nome=bolo</code></p>
+
+    <p><strong>Resposta</strong>:</p>
+    <pre><code>
+[
+  {
+    "id": 1,
+    "nome": "Bolo de Chocolate",
+    "modo_preparo": "Misture todos os ingredientes...",
+    "ingredientes": [
+      {"ingrediente_id": 1, "quantidade": 200},
+      {"ingrediente_id": 2, "quantidade": 100}
+    ]
+  }
+]
+    </code></pre>
+
+    <h3>8. Obter Receita Específica</h3>
+    <p><strong>Método</strong>: <code>GET</code></p>
+    <p><strong>Endpoint</strong>: <code>/receitas/&lt;id&gt;</code></p>
+    <p><strong>Exemplo</strong>: <code>/receitas/1</code></p>
+
+    <p><strong>Resposta</strong>:</p>
+    <pre><code>
+{
+  "id": 1,
+  "nome": "Bolo de Chocolate",
+  "modo_preparo": "Misture todos os ingredientes...",
+  "ingredientes": [
+    {"ingrediente_id": 1, "quantidade": 200},
+    {"ingrediente_id": 2, "quantidade": 100}
+  ]
+}
+    </code></pre>
+
+    <h3>9. Atualizar Receita</h3>
+    <p><strong>Método</strong>: <code>PUT</code></p>
+    <p><strong>Endpoint</strong>: <code>/receitas/&lt;id&gt;</code></p>
+    <p><strong>Body</strong> (exemplo de dados):</p>
+    <pre><code>
+{
+  "nome": "Bolo de Laranja",
+  "modo_preparo": "Misture os ingredientes e leve ao forno por 35 minutos.",
+  "ingredientes": [
+    { "id": 1, "quantidade": 150 },
+    { "id": 2, "quantidade": 100 }
+  ]
+}
+    </code></pre>
+
+    <p><strong>Resposta</strong>:</p>
+    <pre><code>
+{
+  "mensagem": "Receita atualizada com sucesso"
+}
+    </code></pre>
+
+    <h3>10. Deletar Receita</h3>
+    <p><strong>Método</strong>: <code>DELETE</code></p>
+    <p><strong>Endpoint</strong>: <code>/receitas/&lt;id&gt;</code></p>
+    <p><strong>Exemplo</strong>: <code>/receitas/1</code></p>
+
+    <p><strong>Resposta</strong>:</p>
+    <pre><code>
+{
+  "mensagem": "Receita deletada com sucesso."
+}
+    </code></pre>
+
+---
+
+## 🧑‍💻 **Como Rodar a API**
+
+1. **Clone o repositório**:
+   ```bash
+   git clone https://github.com/TagFernandes/API-receita.git
+   cd API-receita
+   python -m venv venv
+    source venv/bin/activate  # Linux/macOS
+    venv\Scripts\activate  # Windows
+    pip install -r requirements.txt
+    python app.py
+
+
+
+    ```
+<h2>💡 Considerações Finais</h2>
+<p>SQLite é usado como banco de dados para este projeto, então o banco será armazenado no arquivo db.sqlite3.</p>
+<p>Para interagir com a API, você pode usar ferramentas como Postman ou cURL.</p>
