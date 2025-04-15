@@ -26,8 +26,7 @@ A API está hospedada em uma máquina na nuvem e pode ser acessada pelo seguinte
 
 ### Passo 1: Clonar o Repositório
 
-git clone https://github.com/TagFernandes/API-receita.git
-cd API-receita
+`git clone https://github.com/TagFernandes/API-receita.git`
 
 
 ## Passo 2: Criar um Ambiente Virtual
