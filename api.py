@@ -186,3 +186,8 @@ def deletar_receita(id):
     db.session.delete(r)
     db.session.commit()
     return jsonify({'mensagem': 'Receita deletada'})
+
+
+@bp.route('/health')
+def health():
+    return "Olá, Docker + Flask + PostgreSQL!"

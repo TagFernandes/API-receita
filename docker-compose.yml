@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"   # Mapeando a porta 5000 do container para a porta 5000 do host
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=${DATABASE_URL}   # Usando a variável do arquivo .env
+    depends_on:
+      - db   # O Flask só irá iniciar após o banco de dados estar disponível
+    volumes:
+      - .:/app   # Permite editar o código localmente e refletir no container durante o desenvolvimento
+
+  db:
+    image: postgres:15   # Usando a imagem oficial do PostgreSQL versão 15
+    restart: always
+    environment:
+      POSTGRES_DB: db_receita
+      POSTGRES_USER: tag
+      POSTGRES_PASSWORD: 20092003
+    ports:
+      - "5432:5432"   # Mapeando a porta 5432 do container para a porta 5432 do host
+    volumes:
+      - postgres_data:/var/lib/postgresql/data   # Volume para persistência dos dados do banco
+
+volumes:
+  postgres_data:   # Definindo um volume para armazenar os dados do PostgreSQL

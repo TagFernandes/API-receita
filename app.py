@@ -1,7 +1,14 @@
 from flask import Flask
+from dotenv import load_dotenv
+load_dotenv()
+
+
 from config import Config
 from models import db
 from api import bp
+
+
+
 
 def create_app():
     app = Flask(__name__)
