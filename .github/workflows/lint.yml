@@ -22,7 +22,3 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: run
-        run: |
-          python app.py
-
